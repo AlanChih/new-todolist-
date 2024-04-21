@@ -96,5 +96,6 @@ header {
 
   .todo-content_body {
     min-height: 50px;
+    min-width: 200px;
   }
 }

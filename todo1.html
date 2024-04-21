@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./reset.css" />
+    <link rel="stylesheet" href="./todo.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <main>
+      <header>
+        <p>標題：</p>
+        <p>
+          <input type="text" id="titleInputer" />
+          <button id="addButton">新增</button>
+        </p>
+        <div>
+          <p>內容：</p>
+          <textarea id="contentInputer" cols="30" rows="6"></textarea>
+        </div>
+      </header>
+      <hr />
+      <section class="todos_container todos_container-uncomplete">
+        <p>未完成</p>
+        <ul id="todosGroupUncomplete">
+          <!--  -->
+          <!-- <li class="todo">
+            <div class="todo-header">
+              <button class="todo-header_btn btn--finish">Finish</button>
+              <button class="todo-header_btn btn--edit">✎</button>
+              <button class="todo-header_btn btn--remove">✖</button>
+            </div>
+            <h3 class="todo-title">fake data title</h3>
+            <div class="todo-content_wrapper">
+              <button class="todo-content_toggler">❯</button>
+              <p class="todo-content_body">
+                fake data content <br />
+                fake data content <br />
+                fake data content <br />
+              </p>
+            </div>
+          </li> -->
+
+          <!--  -->
+          <!-- <li class="todo">
+            <div class="todo-header">
+              <button class="todo-header_btn btn--finish">Finish</button>
+              <button class="todo-header_btn btn--edit">✎</button>
+              <button class="todo-header_btn btn--remove">✖</button>
+            </div>
+            <h3 class="todo-title">fake data title2</h3>
+            <div class="todo-content_wrapper">
+              <button class="todo-content_toggler">❯</button>
+              <p class="todo-content_body">
+                fake data content <br />
+                fake data content <br />
+                fake data content <br />
+                fake data content <br />
+              </p>
+            </div>
+          </li> -->
+        </ul>
+      </section>
+      <section class="todos_container todos_container-complete">
+        <p>已完成</p>
+        <ul id="todosGroupComplete"></ul>
+      </section>
+    </main>
+    <script>
+      //
+      var titleInputer = document.getElementById("titleInputer");
+      var contentInputer = document.getElementById("contentInputer");
+      var addButton = document.getElementById("addButton");
+
+      var todosGroupUncomplete = document.getElementById(
+        "todosGroupUncomplete"
+      );
+      var todosGroupComplete = document.getElementById("todosGroupComplete");
+
+      //
+      var todos = [];
+
+      //
+      addButton.addEventListener("click", function () {
+        //
+        var title = titleInputer.value;
+        var content = contentInputer.value;
+
+        if (!title) {
+          alert("請輸入 title");
+          return;
+        }
+
+        var newTodo = {
+          id: Date.now(),
+          title,
+          content,
+          isComplete: false,
+        };
+
+        todos.push(newTodo);
+        console.log("todos", todos);
+
+        //清空
+        titleInputer.value = "";
+        contentInputer.value = "";
+
+        //添加進 todos 畫面
+        todosGroupUncomplete.insertAdjacentHTML(
+          "afterbegin",
+          `
+          <li class="todo" data-id=${newTodo.id} >
+            <div  class="todo-header">
+              <button class="todo-header_btn btn--finish">Finish</button>
+              <button class="todo-header_btn btn--edit">✎</button>
+              <button  class="todo-header_btn btn--remove">✖</button>
+            </div>
+            <h3 class="todo-title">${newTodo.title}</h3>
+            <div class="todo-content_wrapper">
+              <button class="todo-content_toggler">❯</button>
+              <p class="todo-content_body">${textToHtml(newTodo.content)}</p>
+            </div>
+          </li>
+        `
+        );
+      });
+
+      //
+      todosGroupUncomplete.addEventListener("click", function (e) {
+        //
+        //console.log(e);
+
+        //按鈕們
+        if (e.target.classList.contains("btn--edit")) {
+          alert("edit");
+        }
+        if (e.target.classList.contains("btn--remove")) {
+          var isRemove = confirm("確定要刪除嗎?");
+          console.log("isRemove", isRemove);
+
+          if (isRemove) {
+            //...把它刪了  --> 要刪除的有 2： 一、html 裡面的 li, 二、todos array 裡面的資料
+
+            //一、html 裡面的 li
+            var focusedLi = e.target.closest(".todo");
+            console.log(focusedLi);
+            var focusedLiID = focusedLi.getAttribute("data-id");
+            console.log(focusedLiID);
+            focusedLi.remove();
+
+            //二、todos array 裡面的資料
+            var newTodos = [];
+            for (var i = 0; i < todos.length; i++) {
+              if (todos[i].id == focusedLiID) {
+                //不做事
+                console.log("匹配到要刪除的 id");
+              } else {
+                //
+                console.log("此 todo 不是要刪的");
+                newTodos.push(todos[i]);
+              }
+            }
+            todos = newTodos;
+            console.log(todos);
+          } else {
+            //...按錯了暫時留著
+          }
+        }
+        if (e.target.classList.contains("btn--finish")) {
+          alert("finish");
+        }
+
+        //li 本身 //父找子
+        if (e.target.classList.contains("todo")) {
+          alert("點到了 li");
+
+          var titleText = e.target.querySelector(".todo-title").innerText;
+          console.log(titleText);
+        }
+      });
+
+      //
+      function textToHtml(text) {
+        // 將文本中的換行符轉換為<br>標籤
+        return text.replace(/\n/g, "<br>");
+      }
+    </script>
+  </body>
+</html>

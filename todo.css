@@ -1,0 +1,100 @@
+* {
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  background-color: #f4f4f4;
+}
+
+main {
+  width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  min-height: 100vh;
+}
+
+header {
+  & p {
+    margin: 5px 0;
+  }
+}
+
+.todos_container {
+  padding: 15px;
+  min-height: 35vh;
+  background-color: #f4f4f4;
+  margin-bottom: 15px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+
+  & > p {
+    color: gray;
+    margin-bottom: 15px;
+  }
+
+  & > ul {
+    width: 100%;
+    flex-grow: 1;
+    background-color: #ddd;
+    padding: 15px;
+  }
+}
+
+.todo {
+  background-color: white;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+
+  & button {
+    background-color: transparent;
+    border: 0;
+    outline: 0;
+    cursor: pointer;
+
+    &:hover {
+      color: gray;
+    }
+    &:active {
+      color: #ccc;
+    }
+  }
+
+  .todo-header {
+    border-bottom: 1px solid #ccc;
+    text-align: right;
+  }
+
+  .todo-title {
+    font-size: 24px;
+    padding: 10px 0;
+  }
+
+  .todo-content_wrapper {
+    outline: 1px solid #ccc;
+    position: relative;
+    padding: 20px 0 10px;
+    height: 50px;
+    overflow: hidden;
+  }
+
+  .todo-content_wrapper--active {
+    height: auto;
+  }
+
+  .todo-content_toggler {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 20px;
+  }
+
+  .todo-content_body {
+    min-height: 50px;
+  }
+}

@@ -67,12 +67,41 @@
         <p>已完成</p>
         <ul id="todosGroupComplete"></ul>
       </section>
+
+      <!-- popup -->
+      <div class="popup">
+        <div class="popup_content">
+          <p class="popup_close-space">
+            <button class="popup_close-btn xxxxx yyyyy zzzz">✖</button>
+          </p>
+          <h2 class="popup_name xxxx yyyy">
+            編輯 todo
+            <b>id: <i class="popup_id"></i></b>
+          </h2>
+
+          <div class="popup_body-title">
+            <p>todo 標題：</p>
+            <input type="text" id="popupTitleInputer" />
+          </div>
+
+          <div class="popup_body-content">
+            <p>todo 內容：</p>
+            <textarea id="popupContentInputer" cols="30" rows="6"></textarea>
+          </div>
+
+          <button class="popup_btn-confirm">確定</button>
+          <button class="popup_btn-cancel">取消</button>
+        </div>
+      </div>
     </main>
     <script>
       //
       var titleInputer = document.getElementById("titleInputer");
       var contentInputer = document.getElementById("contentInputer");
       var addButton = document.getElementById("addButton");
+
+      //
+      var popup = document.querySelector(".popup");
 
       var todosGroupUncomplete = document.getElementById(
         "todosGroupUncomplete"
@@ -135,6 +164,7 @@
         //按鈕們
         if (e.target.classList.contains("btn--edit")) {
           alert("edit");
+          popup.style.display = "block";
         }
         if (e.target.classList.contains("btn--remove")) {
           var isRemove = confirm("確定要刪除嗎?");
@@ -182,10 +212,26 @@
       });
 
       //
+      popup.addEventListener("click", function (e) {
+        //
+        console.log("點擊到 popup 的區域內");
+        console.log(e.target.classList);
+
+        if (e.target.classList.contains("popup_close-btn")) {
+          //e.target === document.querySelector(".popup_close-btn")
+          console.log("點到了 close btn");
+          popup.style.display = "none";
+        } else {
+          console.log("沒有點到 close btn");
+        }
+      });
+
+      //
       function textToHtml(text) {
         // 將文本中的換行符轉換為<br>標籤
         return text.replace(/\n/g, "<br>");
       }
+       // 05/05 third modification 
     </script>
   </body>
 </html>
